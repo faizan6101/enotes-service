@@ -1,17 +1,18 @@
-package com.enotes.entity;
+package com.enotes.dto;
 
 import java.util.Date;
 
-import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
 
-
 @Getter
 @Setter
-@MappedSuperclass
-public class BaseModel {
+public class CategoryDto {
 
+	private String name;
+	
+	private String description;
+	
 	private Boolean isActive;
 	
 	private Boolean isDeleted;
@@ -24,6 +25,4 @@ public class BaseModel {
 	
 	private Date updatedOn;
 
-
-	
 }
