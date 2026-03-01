@@ -7,11 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.MultiValueMap;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.*;
 
 import com.enotes.dto.CategoryDto;
 import com.enotes.entity.Category;
@@ -53,11 +51,24 @@ public class CategoryController {
     @GetMapping("/active-category")
     public ResponseEntity<List<CategoryResponse>> getActiveCategory(){
         List<CategoryResponse> activeCategory = categoryService.getActiveCategory();
-        if(CollectionUtils.isEmpty(activeCategory)) {
+        if(ObjectUtils.isEmpty(activeCategory)) {
             return  ResponseEntity.noContent().build();
         }else {
             return new ResponseEntity<List<CategoryResponse>>(activeCategory,HttpStatus.OK);
         }
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getCategoryId(@PathVariable Long id){
+        CategoryDto categoryById = categoryService.getCategoryById(id);
+            return new ResponseEntity<>(categoryById,HttpStatus.OK);
+    }
+
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<?> deleteCategoryId(@PathVariable Long id){
+//         categoryService.deleteCategoryById(id);
+//            return new ResponseEntity<>("category with id"+id +" deleted successfully" ,HttpStatus.OK);
+//        }
+
 
 }
