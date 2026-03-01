@@ -2,9 +2,11 @@ package com.enotes.service.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import com.enotes.AppResponse.CategoryResponse;
+import com.enotes.exception.ResourceNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,5 +62,20 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryDtoList;
 
     }
+
+    @Override
+    public CategoryDto getCategoryById(Long id) {
+        Category category = categoryRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category", "Id", id));
+        return mapper.map(category,CategoryDto.class);
+    }
+
+//    @Override
+//    public void deleteCategoryById(Long id) {
+//        Category category = categoryRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category", "Id", id));
+//        categoryRepo.delete(category);
+//        Category category1=new Category();
+//        category1.setIsDeleted(true);
+//        categoryRepo.save(category1);
+//    }
 
 }
