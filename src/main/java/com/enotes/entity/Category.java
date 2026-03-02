@@ -2,6 +2,7 @@ package com.enotes.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Getter
 @Setter
@@ -9,17 +10,21 @@ import lombok.*;
 @NoArgsConstructor
 @Data
 @Entity(name = "categories")
+@EntityListeners(AuditingEntityListener.class)
 public class Category extends BaseModel{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-    @Column(name = "category_name")
+    @Column(name = "name")
 	private String name;
 
-    @Column(name = "category_description")
+    @Column(name = "description")
 	private String description;
 
 
+    private Boolean isActive;
+
+    private Boolean isDeleted;
 	
 }
