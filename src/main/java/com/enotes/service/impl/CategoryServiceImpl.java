@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 
 import com.enotes.AppResponse.CategoryResponse;
 import com.enotes.exception.ResourceNotFoundException;
+import com.enotes.util.Validation;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,16 +25,16 @@ public class CategoryServiceImpl implements CategoryService {
 	private CategoryRepository categoryRepo;
 	
 	@Autowired
-	private ModelMapper mapper; 
+	private ModelMapper mapper;
+
+    @Autowired
+    private Validation validation;
+
 
 	@Override
 	public CategoryDto saveCategory(CategoryDto categoryDto) {
-
-//        Category category =new Category();
-//        category.setName(categoryDto.getName());
-//        category.setDescription(categoryDto.getDescription());
-//        category.setIsActive(categoryDto.getIsActive());
-            /*using model mapper for converting categoryDto to category object */
+//Validation checking
+        validation.categoryValidation(categoryDto);
         Category category = mapper.map(categoryDto, Category.class);
         if(ObjectUtils.isEmpty(category.getId())){
             category.setIsDeleted(false);
