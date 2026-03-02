@@ -21,5 +21,5 @@ public interface CategoryService {
     public CategoryDto getCategoryById(Long id);
 
     //delete category
-//   public void deleteCategoryById(Long id);
+   public void deleteCategoryById(Long id);
 }

@@ -4,8 +4,12 @@ import com.enotes.AppResponse.ApiResponse;
 import com.enotes.AppResponse.CategoryResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalException {
@@ -15,6 +19,18 @@ public class GlobalException {
         String message = ex.getMessage();
         ApiResponse response= new ApiResponse(message, false);
         return new ResponseEntity<ApiResponse>(response, HttpStatus.NOT_FOUND);
+    }
 
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+        Map<String,String> resp = new HashMap<>();
+        ex.getBindingResult().getFieldErrors().forEach((error) -> {
+            String fieldName = error.getField();
+            String message = error.getDefaultMessage();
+            resp.put(fieldName, message);
+        });
+        String message = ex.getBindingResult().getFieldError().getDefaultMessage();
+        ApiResponse apiResponse = new ApiResponse(message, false);
+        return new ResponseEntity<Map<String,String>>(resp, HttpStatus.BAD_REQUEST);
     }
 }
