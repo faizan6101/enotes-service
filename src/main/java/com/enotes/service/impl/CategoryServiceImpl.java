@@ -85,13 +85,13 @@ public class CategoryServiceImpl implements CategoryService {
         return mapper.map(category,CategoryDto.class);
     }
 
-//    @Override
-//    public void deleteCategoryById(Long id) {
-//        Category category = categoryRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category", "Id", id));
-//        categoryRepo.delete(category);
-//        Category category1=new Category();
-//        category1.setIsDeleted(true);
-//        categoryRepo.save(category1);
-//    }
+    @Override
+    public void deleteCategoryById(Long id) {
+        Category category = categoryRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category", "Id", id));
+        categoryRepo.delete(category);
+        Category category1=new Category();
+        category1.setIsDeleted(true);
+        categoryRepo.save(category1);
+    }
 
 }

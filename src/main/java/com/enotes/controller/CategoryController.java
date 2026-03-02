@@ -3,6 +3,7 @@ package com.enotes.controller;
 import java.util.List;
 
 import com.enotes.AppResponse.CategoryResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -64,11 +65,11 @@ public class CategoryController {
             return new ResponseEntity<>(categoryById,HttpStatus.OK);
     }
 
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<?> deleteCategoryId(@PathVariable Long id){
-//         categoryService.deleteCategoryById(id);
-//            return new ResponseEntity<>("category with id"+id +" deleted successfully" ,HttpStatus.OK);
-//        }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteCategoryId(@PathVariable Long id){
+         categoryService.deleteCategoryById(id);
+            return new ResponseEntity<>("category with id"+id +" deleted successfully" ,HttpStatus.OK);
+        }
 
 
 }
