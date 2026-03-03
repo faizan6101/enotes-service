@@ -3,17 +3,15 @@ package com.enotes.controller;
 import java.util.List;
 
 import com.enotes.AppResponse.CategoryResponse;
-import jakarta.validation.Valid;
+import com.enotes.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.MultiValueMap;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import com.enotes.dto.CategoryDto;
-import com.enotes.entity.Category;
 import com.enotes.service.CategoryService;
 
 @RestController
@@ -27,14 +25,16 @@ public class CategoryController {
 	
 	
 	@PostMapping("save-category")
-	public ResponseEntity<CategoryDto> saveCategory(@RequestBody CategoryDto categoryDto){
+	public ResponseEntity<?> saveCategory(@RequestBody CategoryDto categoryDto){
         CategoryDto saveCategory = categoryService.saveCategory(categoryDto);
 
         if(saveCategory!=null) {
-			return new ResponseEntity<CategoryDto>(saveCategory,HttpStatus.CREATED);
+			return CommonUtil.createBuildResponseMessage(categoryDto,"saved success",HttpStatus.CREATED);
+            //return new ResponseEntity<CategoryDto>(saveCategory,HttpStatus.CREATED);
 		}else {
-		return new ResponseEntity<CategoryDto>(HttpStatus.INTERNAL_SERVER_ERROR);
-	}	
+	//	return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return CommonUtil.createErrorResponseMessage("Category Not saved",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 	}
 	
 	
